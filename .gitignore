@@ -1,0 +1,10 @@
+# Ignored files for git
+node_modules/
+
+# testing files and other stuffs
+nogit/
+
+# misc files
+.env
+TODO
+
