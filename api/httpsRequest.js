@@ -19,10 +19,10 @@ const https = require("https");
  */
 async function httpsRequest(params, data = false) {
   const promisifiedQuery = new Promise((resolve, reject) => {
-    console.log("query ip: " + params.hostname);
+    //console.log("query ip: " + params.hostname);
     const query = https.request(params, res => {
       // Print status code on console
-      console.log("Status Code: " + res.statusCode);
+      //console.log("Status Code: " + res.statusCode);
 
       // Process chunked data
       let rawData = "";

@@ -1,16 +1,17 @@
-// DEXContractMethods.test.js
+// methods.test.js
 //
+const { methods } = require("../../api");
+const fs = require("fs");
 
-const { DEXContractMethods } = require("../../api");
-const { getNamedPools, getPriceByName } = DEXContractMethods;
+const DATA = JSON.parse(fs.readFileSync("../data/data.json"));
 
 (async () => {
   let results = {};
   try {
-    let getNamedPoolsTest = await getNamedPools();
-    results.getNamedPoolsTest = getNamedPoolsTest;
-    let getPriceByNameTest = await getPriceByName(getNamedPoolsTest.result[0]);
-    results.getPriceByNameTest = getPriceByNameTest;
+    let test1 = await methods.icxGetBalance(DATA.wallets[0]);
+    results.icxGetBalance = test1;
+    let test2 = await methods.balanceOf(DATA.wallets[0], DATA.contracts.cft);
+    results.balanceOf = test2;
   } catch (err) {
     console.log("Error while running test");
     console.log(results);
