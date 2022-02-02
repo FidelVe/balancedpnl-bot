@@ -14,16 +14,6 @@
     {"name":"METX/sICX","id":12},{"name":"METX/USDS","id":14},
     {"name":"IUSDT/sICX","id":16},{"name":"FIN/sICX","id":32}
   ],
-  "wallets": [
-    {
-      "name": "test1",
-      "address": "hxa985eda3d3ca398390f502d5b308924aa641dded"
-    },
-    {
-      "name": "test2",
-      "address": "hx0e040d8df7efd5784299ef3486b7188178b4a8c7"
-    }
-  ],
   "tokens": [
     "CFT","sICX","bnUSD","BALN","OMM","METX","GBET", "FIN"
   ],
