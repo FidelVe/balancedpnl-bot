@@ -4,7 +4,7 @@
     "loans": "cx66d4d90f5f113eba575bf793570135f9b10cece1"
   },
   "pools": [
-    {"name":"sICX/ICX","id":1},{"name":"BALN/bnUSD","id":3},
+    {"name":"ICX/sICX","id":1},{"name":"BALN/bnUSD","id":3},
     {"name":"IUSDC/bnUSD","id":5},{"name":"OMM/sICX","id":7},
     {"name":"CFT/sICX","id":9},{"name":"METX/bnUSD","id":11},
     {"name":"METX/IUSDC","id":13},{"name":"IUSDT/bnUSD","id":15},
@@ -12,7 +12,8 @@
     {"name":"BALN/sICX","id":4},{"name":"OMM/IUSDC","id":6},
     {"name":"OMM/USDS","id":8},{"name":"USDS/bnUSD","id":10},
     {"name":"METX/sICX","id":12},{"name":"METX/USDS","id":14},
-    {"name":"IUSDT/sICX","id":16},{"name":"FIN/sICX","id":32}
+    {"name":"IUSDT/sICX","id":16},{"name":"FIN/sICX","id":32},
+    {"name": "FIN/bnUSD", "id":"31"}
   ],
   "tokens": [
     "CFT","sICX","bnUSD","BALN","OMM","METX","GBET", "FIN"

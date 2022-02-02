@@ -4,3 +4,4 @@ exports.walletPosition = require("./walletPosition.js");
 exports.tokenBalance = require("./tokenBalance.js");
 exports.assetsValue = require("./assetsValue.js");
 exports.lib = require("./lib.js");
+exports.getPoolStats = require("./poolStats.js");

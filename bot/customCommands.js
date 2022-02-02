@@ -32,7 +32,7 @@ async function checkPNL(wallets) {
     let pools = await poolPrices();
     let accountData = await walletPosition(eachWallet.address);
     let tokens = await tokenBalance(eachWallet.address);
-    let walletValueInBnUSD = assetsValue(tokens, pools);
+    let walletValueInBnUSD = await assetsValue(tokens, pools);
 
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
