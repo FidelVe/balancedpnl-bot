@@ -1,6 +1,6 @@
 // script.js
 //
-const { customCommands } = require("./bot");
+const { customCommands } = require("../bot");
 const fs = require("fs");
 require('dotenv').config();
 

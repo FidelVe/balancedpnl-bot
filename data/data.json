@@ -4,15 +4,15 @@
     "loans": "cx66d4d90f5f113eba575bf793570135f9b10cece1"
   },
   "pools": [
-    { "name": "sICX/ICX","id":1 }, { "name": "BALN/bnUSD", "id":3 },
-    { "name": "IUSDC/bnUSD", "id":38 }, { "name": "OMM/sICX", "id":0 },
-    { "name":"CFT/sICX", "id":0 }, { "name": "METX/bnUSD", "id":0 },
-    { "name":"METX/IUSDC", "id":0 }, { "name":"IUSDT/bnUSD", "id":0 },
-    { "name": "GBET/bnUSD", "id":0 }, { "name": "sICX/bnUSD", "id":0 },
-    { "name": "BALN/sICX", "id":0 }, { "name": "OMM/IUSDC", "id":0 },
-    { "name": "OMM/USDS", "id":0 }, { "name": "USDS/bnUSD", "id":0 },
-    { "name": "METX/sICX", "id":0 }, { "name": "METX/USDS", "id":0 },
-    { "name": "IUSDT/sICX", "id":0 }, { "name": "FIN/sICX","id":0 }
+    {"name":"sICX/ICX","id":1},{"name":"BALN/bnUSD","id":3},
+    {"name":"IUSDC/bnUSD","id":5},{"name":"OMM/sICX","id":7},
+    {"name":"CFT/sICX","id":9},{"name":"METX/bnUSD","id":11},
+    {"name":"METX/IUSDC","id":13},{"name":"IUSDT/bnUSD","id":15},
+    {"name":"GBET/bnUSD","id":17},{"name":"sICX/bnUSD","id":2},
+    {"name":"BALN/sICX","id":4},{"name":"OMM/IUSDC","id":6},
+    {"name":"OMM/USDS","id":8},{"name":"USDS/bnUSD","id":10},
+    {"name":"METX/sICX","id":12},{"name":"METX/USDS","id":14},
+    {"name":"IUSDT/sICX","id":16},{"name":"FIN/sICX","id":32}
   ],
   "wallets": [
     {
@@ -25,19 +25,20 @@
     }
   ],
   "tokens": [
-    "CFT","SICX","BNUSD","BALN","OMM","METX","GBET", "FIN"
+    "CFT","sICX","bnUSD","BALN","OMM","METX","GBET", "FIN"
   ],
   "token_data": {
     "CFT": { "contract":"cx2e6d0fc0eca04965d06038c8406093337f085fcf"},
-    "SICX": {"contract":"cx2609b924e33ef00b648a409245c7ea394c467824"},
-    "BNUSD": {"contract":"cx88fd7df7ddff82f7cc735c871dc519838cb235bb"},
+    "sICX": {"contract":"cx2609b924e33ef00b648a409245c7ea394c467824"},
+    "bnUSD": {"contract":"cx88fd7df7ddff82f7cc735c871dc519838cb235bb"},
     "BALN": {"contract":"cxf61cd5a45dc9f91c15aa65831a30a90d59a09619"},
     "OMM": {"contract": "cx1a29259a59f463a67bb2ef84398b30ca56b5830a"},
     "METX": {"contract":"cx369a5f4ce4f4648dfc96ba0c8229be0693b4eca2"},
     "GBET": {"contract": "cx6139a27c15f1653471ffba0b4b88dc15de7e3267"},
     "FIN": {"contract": "cx785d504f44b5d2c8dac04c5a1ecd75f18ee57d16"},
     "IUSDC": {"contract": "cxae3034235540b924dfcc1b45836c293dcc82bfb7"},
-    "IUSDT": {"contract":"cx3a36ea1f6b9aa3d2dd9cb68e8987bcc3aabaaa88"}
+    "IUSDT": {"contract":"cx3a36ea1f6b9aa3d2dd9cb68e8987bcc3aabaaa88"},
+    "USDS": { "contract": "cxbb2871f468a3008f80b08fdde5b8b951583acf06" }
   },
   "node": {
     "ctz": "ctz.solidwallet.io",

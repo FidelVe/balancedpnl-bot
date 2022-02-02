@@ -8,7 +8,7 @@ const fs = require("fs");
 
 // Global Constants
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const DATA = JSON.parse(fs.readFileSync(customPath('data/data.json')));
+const DATA = JSON.parse(fs.readFileSync(customPath("data/data.json")));
 
 //Functions
 // Wizard Scenes
@@ -49,8 +49,11 @@ bot.command("/check", async ctx => {
   if (ctx.session.hasInitialized) {
     let reply = await customCommands.checkPNL(ctx.session.wallets);
     ctx.reply(reply);
+  } else {
+    ctx.reply(
+      "There are no wallets to check, use /start command to add wallets"
+    );
   }
-  ctx.reply("There are no wallets to check, use /start command to add wallets");
 });
 
 // running bot

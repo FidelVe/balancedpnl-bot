@@ -5,7 +5,6 @@ const path = require("path");
 const fullPath = path.parse(__filename).dir;
 const fullPathArray = fullPath.split("/");
 const MAIN_FOLDER = fullPathArray[fullPathArray.length - 2];
-console.log(MAIN_FOLDER);
 
 function customPath(relativePath) {
   const parsedPath = path.parse(__filename);

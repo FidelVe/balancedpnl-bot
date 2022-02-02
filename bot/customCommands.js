@@ -28,6 +28,7 @@ async function checkPNL(wallets) {
 
   for (let eachWallet of wallets) {
     console.log(`running check on wallet ${eachWallet.address}.`);
+    // let pools = await poolPrices();
     let pools = await poolPrices();
     let accountData = await walletPosition(eachWallet.address);
     let tokens = await tokenBalance(eachWallet.address);
@@ -36,14 +37,24 @@ async function checkPNL(wallets) {
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
 
-    reply += `Wallet name: ${eachWallet.name}\nWallet address: ${eachWallet.address}\nWallet value in bnUSD: ${walletValueInBnUSD}.\nWallet debt in bnUSD: ${debtInBnUSD}.\nWallet PNL in bnUSD: ${pnlInBnUSD}\n\n`;
+    reply += `Wallet name: ${eachWallet.name}\nWallet address: ${
+      eachWallet.address
+    }\nWallet value in bnUSD: ${walletValueInBnUSD.toFixed(
+      2
+    )}.\nWallet debt in bnUSD: ${debtInBnUSD.toFixed(
+      2
+    )}.\nWallet PNL in bnUSD: ${pnlInBnUSD.toFixed(2)}\n\n`;
 
     dataAllWallets.value += walletValueInBnUSD;
     dataAllWallets.debt += debtInBnUSD;
     dataAllWallets.pnl += pnlInBnUSD;
   }
 
-  reply += `Overall:\nWallet value in bnUSD: ${dataAllWallets.value}.\nWallet debt in bnUSD: ${dataAllWallets.debt}.\nWallet PNL in bnUSD: ${dataAllWallets.pnl}`;
+  reply += `Overall:\nWallet value in bnUSD: ${dataAllWallets.value.toFixed(
+    2
+  )}.\nWallet debt in bnUSD: ${dataAllWallets.debt.toFixed(
+    2
+  )}.\nWallet PNL in bnUSD: ${dataAllWallets.pnl.toFixed(2)}`;
 
   return reply;
 }

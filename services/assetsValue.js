@@ -44,8 +44,12 @@ function assetsValue(tokens, prices) {
     } else if (token.name === TOKEN_NAMES[6]) {
       // token is GBET
       totalValue += toBnusd(token.amount.decimal, prices, "GBET/bnUSD");
+    } else if (token.name === TOKEN_NAMES[7]) {
+      // token is FIN
+      let toSICX = token.amount.decimal * prices["FIN/sICX"].priceDecimal;
+      totalValue += toBnusd(toSICX, prices, "sICX/bnUSD");
     } else {
-      console.error(`Token not found. ${token}`);
+      console.error(`Token not found. ${token.name}`);
     }
   }
 

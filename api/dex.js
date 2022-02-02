@@ -21,6 +21,22 @@ async function customHttpsRequest(params, data) {
   }
 }
 
+async function getPoolId(token1, token2) {
+  const postData = makePostData({
+    to: DATA.contracts.dex,
+    dataType: "call",
+    data: {
+      method: "getPoolId",
+      params: {
+        _token1Address: token1,
+        _token2Address: token2
+      }
+    }
+  });
+  const request = await customHttpsRequest(HTTPS_PARAMS, postData);
+  return request;
+}
+
 async function getPriceByName(name) {
   const postData = makePostData({
     to: DATA.contracts.dex,
@@ -33,6 +49,21 @@ async function getPriceByName(name) {
     }
   });
 
+  const request = await customHttpsRequest(HTTPS_PARAMS, postData);
+  return request;
+}
+
+async function getPrice(poolId) {
+  const postData = makePostData({
+    to: DATA.contracts.dex,
+    dataType: "call",
+    data: {
+      method: "getPrice",
+      params: {
+        _id: poolId.toString()
+      }
+    }
+  });
   const request = await customHttpsRequest(HTTPS_PARAMS, postData);
   return request;
 }
@@ -68,3 +99,5 @@ async function getNamedPools() {
 module.exports.getNamedPools = getNamedPools;
 module.exports.getPriceByName = getPriceByName;
 module.exports.getQuotePriceInBase = getQuotePriceInBase;
+module.exports.getPoolId = getPoolId;
+module.exports.getPrice = getPrice;
