@@ -2,9 +2,9 @@
 //
 const { customCommands } = require("../bot");
 const fs = require("fs");
-require('dotenv').config();
+require("dotenv").config();
 
-let  WALLETS = [
+let WALLETS = [
   {
     name: process.env.WALLET_1_NAME,
     address: process.env.WALLET_1
@@ -16,8 +16,11 @@ let  WALLETS = [
 ];
 
 async function run(wallets) {
-  let reply = await customCommands.checkPNL(wallets);
-  return reply;
+  //let reply = await customCommands.checkPNL(wallets);
+
+  let prices = await customCommands.checkPricesCreateReply(wallets);
+
+  return prices;
 }
 
 (async () => {

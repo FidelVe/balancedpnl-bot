@@ -45,6 +45,18 @@ bot.command("start", ctx => {
 bot.command("/info", ctx => {
   ctx.reply(customCommands.infoCommandReplyText);
 });
+bot.command("/assets", async ctx => {
+  if (ctx.session.hasInitialized) {
+    let reply = await customCommands.checkPricesCreateReply(
+      ctx.session.wallets
+    );
+    ctx.reply(reply);
+  } else {
+    ctx.reply(
+      "There are no wallets to check, use /start command to add wallets"
+    );
+  }
+});
 bot.command("/check", async ctx => {
   if (ctx.session.hasInitialized) {
     let reply = await customCommands.checkPNL(ctx.session.wallets);
