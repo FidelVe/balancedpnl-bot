@@ -1,11 +1,8 @@
-// This sample code gets the IP addresses, node name and wallet addresses
-// of the block producers in the ICON network.
-// It connects with a node to directly get the IP address and the queries
-// the ICON blockchain to get the node names and wallet addresses.
+// httpsRequest.js
+// This module is a https request wrapped in a promise design to be used
+// to interact with the ICON Blockchain
 //
-
 // Imports
-//
 const https = require("https");
 
 /**
@@ -19,7 +16,6 @@ const https = require("https");
  */
 async function httpsRequest(params, data = false) {
   const promisifiedQuery = new Promise((resolve, reject) => {
-    //console.log("query ip: " + params.hostname);
     const query = https.request(params, res => {
       // Print status code on console
       //console.log("Status Code: " + res.statusCode);
@@ -52,10 +48,7 @@ async function httpsRequest(params, data = false) {
       reject(err);
     });
     if (data != false) {
-      // If data param is passed into function then we assume the call is
-      // for path '/api/v3' and method is 'POST' so we send a .write to
-      // the server.
-      //
+      // If data param is passed into function we write the data
       query.write(data);
     }
     // end request
