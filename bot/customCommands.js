@@ -81,6 +81,7 @@ async function checkPNL(wallets) {
 
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
+    let pnlInBnUSDAdjusted = pnlInBnUSD * 0.96;
 
     reply += `Wallet name: ${eachWallet.name}\nWallet address: ${
       eachWallet.address
@@ -88,18 +89,27 @@ async function checkPNL(wallets) {
       2
     )}.\nWallet debt in bnUSD: ${debtInBnUSD.toFixed(
       2
-    )}.\nWallet PNL in bnUSD: ${pnlInBnUSD.toFixed(2)}\n\n`;
+    )}.\nWallet PNL in bnUSD: ${pnlInBnUSD.toFixed(
+      2
+    )}\nWallet PNL in bnUSD (4% adjusted): ${pnlInBnUSDAdjusted.toFixed(
+      2
+    )}\n\n`;
 
     dataAllWallets.value += walletValueInBnUSD;
     dataAllWallets.debt += debtInBnUSD;
     dataAllWallets.pnl += pnlInBnUSD;
+    dataAllWallets.pnlAdjusted = dataAllWallets.pnl * 0.96;
   }
 
   reply += `Overall:\nWallet value in bnUSD: ${dataAllWallets.value.toFixed(
     2
   )}.\nWallet debt in bnUSD: ${dataAllWallets.debt.toFixed(
     2
-  )}.\nWallet PNL in bnUSD: ${dataAllWallets.pnl.toFixed(2)}`;
+  )}.\nWallet PNL in bnUSD: ${dataAllWallets.pnl.toFixed(
+    2
+  )}\nWallet PNL in bnUSD (4% adjusted): ${dataAllWallets.pnlAdjusted.toFixed(
+    2
+  )}`;
 
   return reply;
 }
