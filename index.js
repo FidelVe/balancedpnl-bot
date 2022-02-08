@@ -57,7 +57,7 @@ bot.command("/assets", async ctx => {
     );
   }
 });
-bot.command("/check", async ctx => {
+bot.command("/pnl", async ctx => {
   if (ctx.session.hasInitialized) {
     let reply = await customCommands.checkPNL(ctx.session.wallets);
     ctx.reply(reply);
