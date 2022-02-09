@@ -53,6 +53,7 @@ bot.command("/assets", async ctx => {
     ctx.session[ctx.from.id].hasInitialized &&
     ctx.session[ctx.from.id].wallets.length > 0
   ) {
+    ctx.reply("Running check, please wait a few seconds...");
     let reply = await customCommands.checkPricesCreateReply(
       ctx.session[ctx.from.id].wallets
     );
@@ -69,6 +70,7 @@ bot.command("/pnl", async ctx => {
     ctx.session[ctx.from.id].hasInitialized &&
     ctx.session[ctx.from.id].wallets.length > 0
   ) {
+    ctx.reply("Running check, please wait a few seconds...");
     let reply = await customCommands.checkPNL(ctx.session[ctx.from.id].wallets);
     ctx.reply(reply);
   } else {
