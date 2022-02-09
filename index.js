@@ -4,6 +4,8 @@ require("dotenv").config();
 const { Telegraf, session, Markup, Scenes } = require("telegraf");
 const { customScenes, customCommands } = require("./bot");
 const { customPath } = require("./services");
+const { model } = require("./model");
+const { updateUsersDb, readUsersDb, checkUsersDb } = model;
 const fs = require("fs");
 
 // Global Constants
@@ -46,9 +48,13 @@ bot.command("/info", ctx => {
   ctx.reply(customCommands.infoCommandReplyText);
 });
 bot.command("/assets", async ctx => {
-  if (ctx.session.hasInitialized) {
+  ctx.session = checkUsersDb(ctx.session, ctx.from.id);
+  if (
+    ctx.session[ctx.from.id].hasInitialized &&
+    ctx.session[ctx.from.id].wallets.length > 0
+  ) {
     let reply = await customCommands.checkPricesCreateReply(
-      ctx.session.wallets
+      ctx.session[ctx.from.id].wallets
     );
     ctx.reply(reply);
   } else {
@@ -58,8 +64,38 @@ bot.command("/assets", async ctx => {
   }
 });
 bot.command("/pnl", async ctx => {
-  if (ctx.session.hasInitialized) {
-    let reply = await customCommands.checkPNL(ctx.session.wallets);
+  ctx.session = checkUsersDb(ctx.session, ctx.from.id);
+  if (
+    ctx.session[ctx.from.id].hasInitialized &&
+    ctx.session[ctx.from.id].wallets.length > 0
+  ) {
+    let reply = await customCommands.checkPNL(ctx.session[ctx.from.id].wallets);
+    ctx.reply(reply);
+  } else {
+    ctx.reply(
+      "There are no wallets to check, use /start command to add wallets"
+    );
+  }
+});
+
+bot.command("/summary", async ctx => {
+  ctx.session = checkUsersDb(ctx.session, ctx.from.id);
+  if (
+    ctx.session[ctx.from.id].hasInitialized &&
+    ctx.session[ctx.from.id].wallets.length > 0
+  ) {
+    ctx.reply("Running check, please wait a few seconds...");
+    let replyBreak = "\n=====================\n";
+    let replies = await customCommands.checkSummary(
+      ctx.session[ctx.from.id].wallets
+    );
+    let reply =
+      replyBreak +
+      "PNL check:\n" +
+      replies.pnl +
+      replyBreak +
+      "Assets check\n" +
+      replies.prices;
     ctx.reply(reply);
   } else {
     ctx.reply(

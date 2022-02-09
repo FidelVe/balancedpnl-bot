@@ -7,4 +7,5 @@ nogit/
 # misc files
 .env
 TODO
-
+data/templates/
+data/users.json
