@@ -2,7 +2,7 @@
 
 BalancedPNL is a bot intended to keep track of a wallet position on the [Balanced Network](https://balanced.network/). The bot gets your wallet debt on the platform and compares that debt to the value of all the tokens in the wallet to calculate a PNL.
 
-If you just want to use the bot, go and send a dm to @[BalancedPNL_bot](telegram.me/BalancedPNL_bot) on Telegram, if you want to run your own version of the bot follow the install instructions.
+If you just want to use the bot, go and send a dm to @[BalancedPNL_bot](https://telegram.me/BalancedPNL_bot) on Telegram, if you want to run your own version of the bot follow the install instructions.
 
 Currently the bot has the following commands (you can always send `/info` as a command to the bot to get the list of commands):
 
@@ -29,4 +29,3 @@ You can now run your own version of the bot locally with the command `npm run st
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
