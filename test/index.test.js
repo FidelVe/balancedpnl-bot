@@ -52,11 +52,11 @@ class Bot {
   let newBot = new Bot(MONITORED);
   console.log("Running tests on bot commands");
   // test command /assets
-  newBot.assets();
+  // newBot.assets();
 
   // test command /pnl
-  newBot.pnl();
+  // newBot.pnl();
 
   // test command /summary
-  //newBot.summary();
+  newBot.summary();
 })();

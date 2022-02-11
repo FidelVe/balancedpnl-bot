@@ -12,17 +12,28 @@ async function getPoolsStatsArray(pools = POOLS) {
   let newPoolsData = {};
 
   for (let pool of pools) {
-    let price = await dex.getPoolStats(pool.id);
+    let price = await getPoolStats(pool.id);
 
     //TODO: bypassing IUSD(C/T) related pools because of weird hex values
-    if (!REGEX.test(pool.name)) {
-      newPoolsData[pool.name] = {
-        price: price.result,
-        priceDecimal: REGEX.test(pool.name) // always false
-          ? "0." + parseInt(price.result, 16).toString()
-          : parseInt(price.result, 16) / DATA.base
-      };
-    }
+    // if (!REGEX.test(pool.name)) {
+    newPoolsData[pool.name] = {
+      price: price.result,
+      priceDecimal:
+        pool.name === DATA.pools[0].name
+          ? hexToDecimalWithPrecision(
+              price.result.price,
+              price.result.quote_decimals
+            )
+          : hexToDecimalWithPrecision(
+              price.result.quote,
+              price.result.quote_decimals
+            ) /
+            hexToDecimalWithPrecision(
+              price.result.base,
+              price.result.base_decimals
+            )
+      // };
+    };
   }
   return newPoolsData;
 }

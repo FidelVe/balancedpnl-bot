@@ -12,7 +12,16 @@ async function test() {
   return swap;
 }
 
+async function test2() {
+  const pools = await getPoolStats.getPoolsStatsArray();
+  return pools;
+}
+
 (async () => {
-  let result = await test();
-  console.log(result);
+  //let result = await test();
+  //console.log(result);
+
+  let result2 = await test2();
+  console.log('result test2');
+  //console.log(result2);
 })();
