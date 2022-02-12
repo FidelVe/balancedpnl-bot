@@ -2,7 +2,8 @@
 //
 const customPath = require("./customPath.js");
 const { methods } = require("../api");
-const { icxGetBalance, balanceOf } = methods;
+const { hexToDecimalWithPrecision } = require("./lib.js");
+const { icxGetBalance, balanceOf, decimals } = methods;
 const fs = require("fs");
 
 const DATA = JSON.parse(fs.readFileSync(customPath("/data/data.json"), "utf8"));
@@ -21,9 +22,13 @@ async function tokenBalance(wallet) {
   for (let token of DATA.tokens) {
     let tokenData = { name: token, contract: DATA.token_data[token].contract };
     let tokenHexPrice = await balanceOf(wallet, tokenData.contract);
+    let tokenDecimal = await decimals(wallet, tokenData.contract);
     tokenData.amount = {
       hex: tokenHexPrice.result,
-      decimal: parseInt(tokenHexPrice.result, 16) / DATA.base
+      decimal: hexToDecimalWithPrecision(
+        tokenHexPrice.result,
+        tokenDecimal.result
+      )
     };
     balance.push(tokenData);
   }

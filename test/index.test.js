@@ -8,7 +8,8 @@ const fs = require("fs");
 
 const MONITORED = [
   { name: process.env.WALLET_1_NAME, address: process.env.WALLET_1 },
-  { name: process.env.WALLET_2_NAME, address: process.env.WALLET_2 }
+  // { name: process.env.WALLET_2_NAME, address: process.env.WALLET_2 },
+  { name: process.env.WALLET_3_NAME, address: process.env.WALLET_3 }
 ];
 
 class Bot {

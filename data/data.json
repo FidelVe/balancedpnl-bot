@@ -16,8 +16,7 @@
     {"name": "FIN/bnUSD", "id":"31"}
   ],
   "tokens": [
-    "CFT","sICX","bnUSD","BALN","OMM","METX","GBET", "FIN"
-  ],
+    "CFT","sICX","bnUSD","BALN","OMM","METX","GBET", "FIN", "IUSDT", "USDS", "IUSDC"],
   "token_data": {
     "CFT": { "contract":"cx2e6d0fc0eca04965d06038c8406093337f085fcf"},
     "sICX": {"contract":"cx2609b924e33ef00b648a409245c7ea394c467824"},

@@ -2,9 +2,9 @@
 //
 const httpsRequest = require("./httpsRequest");
 const makePostData = require("./makePostData.js");
-const { customPath } = require('../services');
+const { customPath } = require("../services");
 const fs = require("fs");
-const DATA = JSON.parse(fs.readFileSync(customPath('/data/data.json'), "utf8"));
+const DATA = JSON.parse(fs.readFileSync(customPath("/data/data.json"), "utf8"));
 
 const HTTPS_PARAMS = {
   hostname: DATA.node.geometry,
@@ -28,6 +28,18 @@ async function icxGetBalance(wallet) {
   return request;
 }
 
+async function decimals(wallet, contract) {
+  const postData = makePostData({
+    to: contract,
+    dataType: "call",
+    data: {
+      method: "decimals"
+    }
+  });
+
+  const request = await customHttpsRequest(HTTPS_PARAMS, postData);
+  return request;
+}
 async function balanceOf(wallet, contract) {
   const postData = makePostData({
     to: contract,
@@ -45,3 +57,4 @@ async function balanceOf(wallet, contract) {
 }
 module.exports.balanceOf = balanceOf;
 module.exports.icxGetBalance = icxGetBalance;
+module.exports.decimals = decimals;

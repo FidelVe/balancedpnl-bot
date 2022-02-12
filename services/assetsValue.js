@@ -93,6 +93,27 @@ async function assetsValue(tokens, prices) {
         getCorrectPool("FIN/bnUSD")
       );
       totalValue += toBnUSD;
+    } else if (token.name === TOKEN_NAMES[8]) {
+      // token is IUSDT
+      let toBnUSD = await getSwapEstimate(
+        token.amount.decimal,
+        getCorrectPool("IUSDT/bnUSD")
+      );
+      totalValue += toBnUSD;
+    } else if (token.name === TOKEN_NAMES[9]) {
+      // token is USDS
+      let toBnUSD = await getSwapEstimate(
+        token.amount.decimal,
+        getCorrectPool("USDS/bnUSD")
+      );
+      totalValue += toBnUSD;
+    } else if (token.name === TOKEN_NAMES[10]) {
+      // token is IUSDC
+      let toBnUSD = await getSwapEstimate(
+        token.amount.decimal,
+        getCorrectPool("IUSDC/bnUSD")
+      );
+      totalValue += toBnUSD;
     } else {
       console.error(`Token not found. ${token.name}`);
     }

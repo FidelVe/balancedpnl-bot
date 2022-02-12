@@ -1,6 +1,7 @@
 // getPoolStats.js
 //
 const { dex } = require("../api");
+const { hexToDecimalWithPrecision } = require("./lib.js");
 const fs = require("fs");
 const customPath = require("./customPath.js");
 
@@ -44,9 +45,6 @@ async function getPoolStats(poolId) {
   return stats;
 }
 
-function hexToDecimalWithPrecision(value, decimals) {
-  return parseInt(value, 16) / Number("1E" + parseInt(decimals, 16).toString());
-}
 /*
  * Estimates the result of a swap in a pool
  * @params {number} value
