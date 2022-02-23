@@ -18,6 +18,7 @@ async function customHttpsRequest(params, data) {
   } catch (err) {
     console.log("Error running customHttpsRequest");
     console.log(err);
+    return null;
   }
 }
 
@@ -118,4 +119,4 @@ module.exports = {
   getPoolId: getPoolId,
   getPrice: getPrice,
   getPoolStats: getPoolStats
-}
+};

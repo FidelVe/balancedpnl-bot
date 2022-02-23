@@ -34,6 +34,19 @@ bot.action("_CHECK", (ctx, next) => {
 bot.action("_DELETE", (ctx, next) => {
   ctx.scene.enter("DELETE_WIZARD");
 });
+bot.command("/test", ctx => {
+  console.log("test command", ctx.state);
+});
+// /^(\/addsICX+\s)+\d{0,}[\.]?\d{0,}$/
+bot.hears(/^(\/\w+\s+\d*\.?\d*)$/, ctx => {
+  // bot listen to any command followed by a number (i.e /addsICX 123);
+  let command = ctx.message.text.split(" ");
+  if (command[0].substring(1) === "addsICX") {
+    // command sent: addsICX
+    console.log("command: ", JSON.stringify(command));
+    ctx.reply(customCommands.addsICX(command, ctx.from.id));
+  }
+});
 bot.command("start", ctx => {
   ctx.reply(
     customCommands.startCommandReplyText,
@@ -89,7 +102,8 @@ bot.command("/summary", async ctx => {
     ctx.reply("Running check, please wait a few seconds...");
     let replyBreak = "\n=====================\n";
     let replies = await customCommands.checkSummary(
-      ctx.session[ctx.from.id].wallets
+      ctx.session[ctx.from.id].wallets,
+      ctx.from.id
     );
     let reply =
       replyBreak +
@@ -109,6 +123,12 @@ bot.command("/summary", async ctx => {
 // running bot
 bot.launch();
 
+bot.catch(err => {
+  console.log("Bot Error:");
+  console.log(err);
+  console.log("Bot error, throwing unhandled exception");
+  throw "Bot error, throwing exception";
+});
 // Catching uncaught exceptions
 process.on("uncaughtException", err => {
   console.error("Uncaught error: ", err);

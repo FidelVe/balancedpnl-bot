@@ -8,13 +8,14 @@ const {
   customPath,
   lib
 } = require("../services");
+const { model } = require("../model");
 
 // Functions
 const startCommandReplyText =
   "Hi!, welcome to the BalancedPNL Bot.\n\nYou can use this bot to track the PNL of a wallet with an open position in the Balanced Network. The bot gets the debt of a wallet and with the current price and amount of each token in the wallets it calculates the PNL.\n\nTo use the bot please click on the 'Add Wallet' button to add a wallet to track, you can see which wallets are you tracking by clicking in the 'Check Wallet' and you can delete wallets with the 'Delete Wallet' button.";
 
 const infoCommandReplyText =
-  "The following is a list of commands that you can use with this bot.\n\n* /start => Use this command to add, delete and view the wallets being tracked.\n* /info => With this command the bot will reply with this info message.\n* /pnl => Use this command to view the PNL of each wallet you have added and the overall PNL of all the wallets.\n* /assets => Use this command to get a summary of each wallet. The summary shows each token in the wallet, their balance and the prices in the pools for that token.\n* /summary => runs a /pnl and /assets check combined";
+  "The following is a list of commands that you can use with this bot.\n\n* /start => Use this command to add, delete and view the wallets being tracked.\n* /info => With this command the bot will reply with this info message.\n* /pnl => Use this command to view the PNL of each wallet you have added and the overall PNL of all the wallets.\n* /assets => Use this command to get a summary of each wallet. The summary shows each token in the wallet, their balance and the prices in the pools for that token.\n* /summary => runs a /pnl and /assets check combined\n* /addsICX => Adds an sICX amount to the PNL calculation.";
 
 async function checkPricesCreateReply(wallets) {
   let replies = await checkSummary(wallets);
@@ -26,7 +27,7 @@ async function checkPNL(wallets) {
   return replies.pnl;
 }
 
-async function checkSummary(wallets) {
+async function checkSummary(wallets, currentUserId) {
   let replies = {
     pnl: "",
     prices: ""
@@ -36,17 +37,24 @@ async function checkSummary(wallets) {
     debt: 0,
     pnl: 0
   };
+
   const pools = await poolPrices();
   const poolPairs = Object.keys(pools);
   let priceOfAssetsInWallet = [];
+  let customTokens = await tokenBalance.userDefinedTokenBalance(currentUserId);
 
   for (let eachWallet of wallets) {
     console.log(`running check on wallet ${eachWallet.address}.`);
     let newWalletObj = { address: eachWallet.address, tokens: [] };
 
     let accountData = await walletPosition(eachWallet.address);
-    let tokens = await tokenBalance(eachWallet.address);
-    let walletValueInBnUSD = await assetsValue(tokens, pools);
+    console.log("accountData: ", JSON.stringify(accountData));
+
+    let tokens = await tokenBalance.tokenBalance(eachWallet.address);
+    console.log("tokens: ", JSON.stringify(tokens));
+
+    let walletValueInBnUSD = await assetsValue(tokens, pools, currentUserId);
+    console.log("walletValueInBnUSD: ", JSON.stringify(walletValueInBnUSD));
 
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
@@ -109,13 +117,25 @@ async function checkSummary(wallets) {
     }
     replies.prices += "\n\n";
   }
+  // Adding manually input assets from user to the reply
+  replies.prices += customTokens;
 
   return replies;
 }
 
+function addsICX(command, currentUserId) {
+  let db = model.readDb(currentUserId);
+  db[currentUserId].assets.sICX = parseFloat(command[1]);
+  model.writeDb(db);
+  return `${command[1]} sICX added succesfully`;
+}
+
 // exports
-exports.startCommandReplyText = startCommandReplyText;
-exports.infoCommandReplyText = infoCommandReplyText;
-exports.checkPNL = checkPNL;
-exports.checkPricesCreateReply = checkPricesCreateReply;
-exports.checkSummary = checkSummary;
+module.exports = {
+  startCommandReplyText: startCommandReplyText,
+  infoCommandReplyText: infoCommandReplyText,
+  checkPNL: checkPNL,
+  checkPricesCreateReply: checkPricesCreateReply,
+  checkSummary: checkSummary,
+  addsICX: addsICX
+};
