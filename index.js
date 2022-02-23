@@ -2,10 +2,7 @@
 //
 require("dotenv").config();
 const { Telegraf, session, Markup, Scenes } = require("telegraf");
-const {
-  customScenes,
-  customCommands
-} = require("./bot");
+const { customScenes, customCommands } = require("./bot");
 const { customPath } = require("./services");
 const { model } = require("./model");
 const { updateUsersDb, readUsersDb, checkUsersDb } = model;
@@ -129,6 +126,8 @@ bot.launch();
 bot.catch(err => {
   console.log("Bot Error:");
   console.log(err);
+  console.log("Bot error, throwing unhandled exception");
+  throw "Bot error, throwing exception";
 });
 // Catching uncaught exceptions
 process.on("uncaughtException", err => {
