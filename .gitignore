@@ -9,3 +9,4 @@ nogit/
 TODO
 data/templates/
 data/users.json
+data/db.json

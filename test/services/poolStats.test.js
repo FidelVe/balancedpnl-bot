@@ -6,22 +6,19 @@ const fs = require("fs");
 const DATA = JSON.parse(fs.readFileSync(customPath("/data/data.json")));
 
 const TEST_POOL = DATA.pools[18]; // FIN/bnUSD pool
+const TEST_POOL2 = DATA.pools[9]; // sICX/bnUSD pool
 
-async function test() {
-  const swap = await getPoolStats.getSwapEstimate(190, TEST_POOL);
+async function getSwapEstimateTest(value, pool) {
+  const swap = await getPoolStats.getSwapEstimate(value, pool);
   return swap;
 }
 
-async function test2() {
+async function getPoolsStatsArray() {
   const pools = await getPoolStats.getPoolsStatsArray();
   return pools;
 }
 
 (async () => {
-  //let result = await test();
-  //console.log(result);
-
-  let result2 = await test2();
-  console.log('result test2');
-  //console.log(result2);
+  let test1 = await getSwapEstimateTest(5000, TEST_POOL2);
+  console.log(`test1:\nsICX: 5000\nPool: ${JSON.stringify(TEST_POOL2)}\nResult: ${test1}\n\n`);
 })();

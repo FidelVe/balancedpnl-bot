@@ -3,6 +3,7 @@
 const fs = require("fs");
 const customPath = require("./customPath.js");
 const { getSwapEstimate } = require("./poolStats");
+const { model } = require("../model");
 
 const DATA = JSON.parse(fs.readFileSync(customPath("/data/data.json"), "utf8"));
 // [CFT, SICX, BNUSD, BALN, OMM, METX, GBET];
@@ -26,10 +27,34 @@ function getCorrectPool(tag) {
   return correctPool;
 }
 
-async function assetsValue(tokens, prices) {
+async function assetsValue(tokens, prices, currentUserId) {
   let totalValue = 0;
+  let db = model.readDb(currentUserId);
+
+  if (db[currentUserId] == null) {
+    // if not custom assets has been added to user profile
+  } else {
+    for (let token of Object.keys(db[currentUserId].assets)) {
+      // adding up total value of assets manually entered by user
+      if (token === "sICX") {
+        let amount = db[currentUserId].assets[token];
+        let correctPool = getCorrectPool("sICX/bnUSD");
+        let toBnUSD = await getSwapEstimate(amount, correctPool);
+        //
+        console.log("Amount: ", amount);
+        console.log("Pool: ", JSON.stringify(correctPool));
+        console.log("toBnUSD: ", toBnUSD);
+        //
+        totalValue += toBnUSD;
+      } else if (token === "bnUSD") {
+        totalValue += db[currentUserId].assets[token];
+      }
+    }
+  }
 
   for (let token of tokens) {
+    console.log("token: ", token);
+    // adding up the total value of the assets in the wallet
     if (token.name === "ICX") {
       // if token is ICX
       let toSICX = await getSwapEstimate(

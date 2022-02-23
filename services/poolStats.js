@@ -15,26 +15,38 @@ async function getPoolsStatsArray(pools = POOLS) {
   for (let pool of pools) {
     let price = await getPoolStats(pool.id);
 
-    //TODO: bypassing IUSD(C/T) related pools because of weird hex values
-    // if (!REGEX.test(pool.name)) {
-    newPoolsData[pool.name] = {
-      price: price.result,
-      priceDecimal:
-        pool.name === DATA.pools[0].name
-          ? hexToDecimalWithPrecision(
-              price.result.price,
-              price.result.quote_decimals
-            )
-          : hexToDecimalWithPrecision(
-              price.result.quote,
-              price.result.quote_decimals
-            ) /
-            hexToDecimalWithPrecision(
-              price.result.base,
-              price.result.base_decimals
-            )
-      // };
-    };
+    //
+    // console.log("Pool: ", JSON.stringify(pool));
+    // console.log("Price: ", JSON.stringify(price));
+    // console.log("\n");
+
+    if (price == null) {
+      newPoolsData[pool.name] = {
+        price: null,
+        priceDecimal: null
+      };
+    } else {
+      //TODO: bypassing IUSD(C/T) related pools because of weird hex values
+      // if (!REGEX.test(pool.name)) {
+      newPoolsData[pool.name] = {
+        price: price.result,
+        priceDecimal:
+          pool.name === DATA.pools[0].name
+            ? hexToDecimalWithPrecision(
+                price.result.price,
+                price.result.quote_decimals
+              )
+            : hexToDecimalWithPrecision(
+                price.result.quote,
+                price.result.quote_decimals
+              ) /
+              hexToDecimalWithPrecision(
+                price.result.base,
+                price.result.base_decimals
+              )
+        // };
+      };
+    }
   }
   return newPoolsData;
 }
