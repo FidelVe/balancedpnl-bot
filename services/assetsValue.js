@@ -51,7 +51,6 @@ async function assetsValue(tokens, prices, currentUserId) {
   }
 
   for (let token of tokens) {
-    console.log("token: ", token);
     // adding up the total value of the assets in the wallet
     if (token.name === "ICX") {
       // if token is ICX
