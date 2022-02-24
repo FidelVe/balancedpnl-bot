@@ -29,6 +29,7 @@ function getCorrectPool(tag) {
 
 async function assetsValue(tokens, prices, currentUserId) {
   let totalValue = 0;
+  let result = { totalValue: 0, totalValueWithoutCustom: 0 };
   let db = model.readDb(currentUserId);
 
   if (db[currentUserId] == null) {
@@ -45,9 +46,11 @@ async function assetsValue(tokens, prices, currentUserId) {
         console.log("Pool: ", JSON.stringify(correctPool));
         console.log("toBnUSD: ", toBnUSD);
         //
-        totalValue += toBnUSD;
+        result.totalValue += toBnUSD;
+        result.totalValueWithoutCustom += toBnUSD;
       } else if (token === "bnUSD") {
-        totalValue += db[currentUserId].assets[token];
+        result.totalValue += db[currentUserId].assets[token];
+        result.totalValueWithoutCustom += db[currentUserId].assets[token];
       }
     }
   }
@@ -62,7 +65,7 @@ async function assetsValue(tokens, prices, currentUserId) {
         getCorrectPool("ICX/sICX")
       );
       let toBnUSD = await getSwapEstimate(toSICX, getCorrectPool("sICX/bnUSD"));
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[0]) {
       // if token is CFT
       // CFT > SICX
@@ -71,24 +74,24 @@ async function assetsValue(tokens, prices, currentUserId) {
         getCorrectPool("CFT/sICX")
       );
       let toBnUSD = await getSwapEstimate(toSICX, getCorrectPool("sICX/bnUSD"));
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[1]) {
       // if token is SICX
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("sICX/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[2]) {
       // if token is BNUSD
-      totalValue += token.amount.decimal;
+      result.totalValue += token.amount.decimal;
     } else if (token.name === TOKEN_NAMES[3]) {
       // if token is BALN
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("BALN/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[4]) {
       // token is OMM
       let toSICX = await getSwapEstimate(
@@ -96,55 +99,57 @@ async function assetsValue(tokens, prices, currentUserId) {
         getCorrectPool("OMM/sICX")
       );
       let toBnUSD = await getSwapEstimate(toSICX, getCorrectPool("sICX/bnUSD"));
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[5]) {
       // token is METX
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("METX/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[6]) {
       // token is GBET
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("GBET/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[7]) {
       // token is FIN
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("FIN/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[8]) {
       // token is IUSDT
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("IUSDT/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[9]) {
       // token is USDS
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("USDS/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else if (token.name === TOKEN_NAMES[10]) {
       // token is IUSDC
       let toBnUSD = await getSwapEstimate(
         token.amount.decimal,
         getCorrectPool("IUSDC/bnUSD")
       );
-      totalValue += toBnUSD;
+      result.totalValue += toBnUSD;
     } else {
       console.error(`Token not found. ${token.name}`);
     }
   }
 
-  return totalValue;
+  result.totalValueWithoutCustom =
+    result.totalValue - resultTotalValueWithoutCustom;
+  return result;
 }
 
 module.exports = assetsValue;
