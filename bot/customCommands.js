@@ -48,6 +48,7 @@ async function checkSummary(wallets, currentUserId) {
     let newWalletObj = { address: eachWallet.address, tokens: [] };
 
     let accountData = await walletPosition(eachWallet.address);
+<<<<<<< HEAD
     console.log("accountData: ", JSON.stringify(accountData));
 
     let tokens = await tokenBalance.tokenBalance(eachWallet.address);
@@ -55,18 +56,36 @@ async function checkSummary(wallets, currentUserId) {
 
     let walletValueInBnUSD = await assetsValue(tokens, pools, currentUserId);
     console.log("walletValueInBnUSD: ", JSON.stringify(walletValueInBnUSD));
+=======
+
+    let tokens = await tokenBalance.tokenBalance(eachWallet.address);
+
+    let overallWalletValueInBnUSD = await assetsValue(
+      tokens,
+      pools,
+      currentUserId
+    );
+    let walletValueInBnUSD = overallWalletValueInBnUSD.totalValue;
+    let walletValueInBnUSDWithoutCustom =
+      overallWalletValueInBnUSD.totalValueWithoutCustom;
+>>>>>>> dev
 
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
+    let pnlInBnUSDWithoutCustom = walletValueInBnUSDWithoutCustom - debtInBnUSD;
     let pnlInBnUSDAdjusted = pnlInBnUSD * 0.96;
 
     replies.pnl += `Wallet name: ${eachWallet.name}\nWallet address: ${
       eachWallet.address
     }\nWallet value in bnUSD: ${walletValueInBnUSD.toFixed(
       2
-    )}.\nWallet debt in bnUSD: ${debtInBnUSD.toFixed(
+    )}.\nWallet value in bnUSD (without custom assets): ${walletValueInBnUSDWithoutCustom.toFixed(
       2
-    )}.\nWallet PNL in bnUSD: ${pnlInBnUSD.toFixed(
+    )}\nWallet debt in bnUSD: ${debtInBnUSD.toFixed(
+      2
+    )}.\nWallet PNL in bnUSD (without custom assets): ${pnlInBnUSDWithoutCustom.toFixed(
+      2
+    )}\nWallet PNL in bnUSD: ${pnlInBnUSD.toFixed(
       2
     )}\nWallet PNL in bnUSD (4% adjusted): ${pnlInBnUSDAdjusted.toFixed(
       2
