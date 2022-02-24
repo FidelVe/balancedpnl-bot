@@ -41,11 +41,6 @@ async function assetsValue(tokens, prices, currentUserId) {
         let amount = db[currentUserId].assets[token];
         let correctPool = getCorrectPool("sICX/bnUSD");
         let toBnUSD = await getSwapEstimate(amount, correctPool);
-        //
-        console.log("Amount: ", amount);
-        console.log("Pool: ", JSON.stringify(correctPool));
-        console.log("toBnUSD: ", toBnUSD);
-        //
         result.totalValue += toBnUSD;
         result.totalValueWithoutCustom += toBnUSD;
       } else if (token === "bnUSD") {
@@ -148,7 +143,7 @@ async function assetsValue(tokens, prices, currentUserId) {
   }
 
   result.totalValueWithoutCustom =
-    result.totalValue - resultTotalValueWithoutCustom;
+    result.totalValue - result.totalValueWithoutCustom;
   return result;
 }
 
