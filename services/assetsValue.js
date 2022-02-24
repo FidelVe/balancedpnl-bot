@@ -29,10 +29,8 @@ function getCorrectPool(tag) {
 
 async function assetsValue(tokens, prices, currentUserId) {
   let totalValue = 0;
-<<<<<<< HEAD
-=======
+
   let result = { totalValue: 0, totalValueWithoutCustom: 0 };
->>>>>>> dev
   let db = model.readDb(currentUserId);
 
   if (db[currentUserId] == null) {
@@ -44,31 +42,16 @@ async function assetsValue(tokens, prices, currentUserId) {
         let amount = db[currentUserId].assets[token];
         let correctPool = getCorrectPool("sICX/bnUSD");
         let toBnUSD = await getSwapEstimate(amount, correctPool);
-<<<<<<< HEAD
-        //
-        console.log("Amount: ", amount);
-        console.log("Pool: ", JSON.stringify(correctPool));
-        console.log("toBnUSD: ", toBnUSD);
-        //
-        totalValue += toBnUSD;
-      } else if (token === "bnUSD") {
-        totalValue += db[currentUserId].assets[token];
-=======
         result.totalValue += toBnUSD;
         result.totalValueWithoutCustom += toBnUSD;
       } else if (token === "bnUSD") {
         result.totalValue += db[currentUserId].assets[token];
         result.totalValueWithoutCustom += db[currentUserId].assets[token];
->>>>>>> dev
       }
     }
   }
 
   for (let token of tokens) {
-<<<<<<< HEAD
-    console.log("token: ", token);
-=======
->>>>>>> dev
     // adding up the total value of the assets in the wallet
     if (token.name === "ICX") {
       // if token is ICX

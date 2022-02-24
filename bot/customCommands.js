@@ -48,16 +48,6 @@ async function checkSummary(wallets, currentUserId) {
     let newWalletObj = { address: eachWallet.address, tokens: [] };
 
     let accountData = await walletPosition(eachWallet.address);
-<<<<<<< HEAD
-    console.log("accountData: ", JSON.stringify(accountData));
-
-    let tokens = await tokenBalance.tokenBalance(eachWallet.address);
-    console.log("tokens: ", JSON.stringify(tokens));
-
-    let walletValueInBnUSD = await assetsValue(tokens, pools, currentUserId);
-    console.log("walletValueInBnUSD: ", JSON.stringify(walletValueInBnUSD));
-=======
-
     let tokens = await tokenBalance.tokenBalance(eachWallet.address);
 
     let overallWalletValueInBnUSD = await assetsValue(
@@ -68,7 +58,6 @@ async function checkSummary(wallets, currentUserId) {
     let walletValueInBnUSD = overallWalletValueInBnUSD.totalValue;
     let walletValueInBnUSDWithoutCustom =
       overallWalletValueInBnUSD.totalValueWithoutCustom;
->>>>>>> dev
 
     let debtInBnUSD = lib.validateNumber(accountData.debt.BNUSD.decimal);
     let pnlInBnUSD = walletValueInBnUSD - debtInBnUSD;
