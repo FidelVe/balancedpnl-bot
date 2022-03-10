@@ -138,6 +138,12 @@ function addsICX(command, currentUserId) {
   model.writeDb(db);
   return `${command[1]} sICX added succesfully`;
 }
+function addUSD(command, currentUserId) {
+  let db = model.readDb(currentUserId);
+  db[currentUserId].assets.USD = parseFloat(command[1]);
+  model.writeDb(db);
+  return `${command[1]} USD added succesfully`;
+}
 
 // exports
 module.exports = {
@@ -146,5 +152,6 @@ module.exports = {
   checkPNL: checkPNL,
   checkPricesCreateReply: checkPricesCreateReply,
   checkSummary: checkSummary,
-  addsICX: addsICX
+  addsICX: addsICX,
+  addUSD: addUSD
 };

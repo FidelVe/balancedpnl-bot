@@ -43,7 +43,7 @@ async function assetsValue(tokens, prices, currentUserId) {
         let toBnUSD = await getSwapEstimate(amount, correctPool);
         result.totalValue += toBnUSD;
         result.totalValueWithoutCustom += toBnUSD;
-      } else if (token === "bnUSD") {
+      } else if (token === "USD") {
         result.totalValue += db[currentUserId].assets[token];
         result.totalValueWithoutCustom += db[currentUserId].assets[token];
       }
