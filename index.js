@@ -45,6 +45,10 @@ bot.hears(/^(\/\w+\s+\d*\.?\d*)$/, ctx => {
     // command sent: addsICX
     console.log("command: ", JSON.stringify(command));
     ctx.reply(customCommands.addsICX(command, ctx.from.id));
+  } else if (command[0].substring(1) === "addUSD") {
+    // command sent: addsICX
+    console.log("command: ", JSON.stringify(command));
+    ctx.reply(customCommands.addUSD(command, ctx.from.id));
   }
 });
 bot.command("start", ctx => {
