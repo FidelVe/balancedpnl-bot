@@ -7,7 +7,7 @@ const fs = require("fs");
 const DATA = JSON.parse(fs.readFileSync(customPath("/data/data.json"), "utf8"));
 
 const HTTPS_PARAMS = {
-  hostname: DATA.node.geometry,
+  hostname: DATA.node.ctz,
   ...DATA.param.api
 };
 
